@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import fetcher from "lib/fetcher";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import NumberFormat from "react-number-format";
 
 import styles from "./Profile.module.css";
@@ -47,15 +48,17 @@ export default function () {
           displayType={"text"}
           thousandSeparator={true}
         />{" "}
-        total effort points and has
+        total effort points and has{" "}
         <NumberFormat
           value={data.pointsLeft}
           displayType={"text"}
           thousandSeparator={true}
-          prefix={"$"}
         />{" "}
         more to go.
       </p>
+      <Link href={`/profile/donateNow/${data.id}`}>End and donate now</Link>
+      <Link href={`/profile/edit/${data.id}`}>Edit pledge</Link>
+      <Link href={`/profile/delete/${data.id}`}>Delete account</Link>
     </div>
   );
 }
