@@ -5,13 +5,6 @@
     "pledgeMax": { "int": { "min": 0, "max": 1000000 } },
     "pointsEarned": { "int": { "min": 0, "max": 1000000 } },
     "pointsMax": { "int": { "min": 0, "max": 1000000 } },
-    "pointsLeft": { "int": { "min": 0, "max": 1000000 } },
-    "predictions": {
-      "linear": { "willMeet": { "boolean": {} }, "date": { "string": {} } },
-      "some-fancy-model": {
-        "willMeet": { "boolean": {} },
-        "date": { "string": {} }
-      }
-    }
+    "pointsLeft": { "int": { "min": 0, "max": 1000000 } }
   }
 }
