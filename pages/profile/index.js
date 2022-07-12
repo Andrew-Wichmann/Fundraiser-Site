@@ -1,18 +1,25 @@
-import useSWR from "swr";
-import fetcher from "lib/fetcher";
-import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
 import NumberFormat from "react-number-format";
+import netlifyIdentity from "netlify-identity-widget";
+import fetcher from "lib/fetcher";
+import useSWR from "swr";
 
 import styles from "./Profile.module.css";
 
-export default function () {
-  const router = useRouter();
-  const { id } = router.query;
+const silly = {
+  "andrewp.wichmann@gmail.com": 1,
+};
+
+const ProfilePage = ({ user }) => {
   const { data, error } = useSWR(
-    `https://mockend.com/Andrew-Wichmann/Fundraiser-Site/users/${id}`,
+    `https://mockend.com/Andrew-Wichmann/Fundraiser-Site/users/${
+      silly[user.email]
+    }`,
     fetcher
   );
+
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
   return (
@@ -56,9 +63,31 @@ export default function () {
         />{" "}
         more to go.
       </p>
-      <Link href={`/profile/donateNow/${data.id}`}>End and donate now</Link>
-      <Link href={`/profile/edit/${data.id}`}>Edit pledge</Link>
-      <Link href={`/profile/delete/${data.id}`}>Delete account</Link>
+      <Link href={`/profile/donateNow/`}>End and donate now</Link>
+      <Link href={`/profile/edit/`}>Edit pledge</Link>
+      <Link href={`/profile/delete/`}>Delete account</Link>
     </div>
   );
+};
+
+export default function () {
+  const [user, setUser] = useState();
+  netlifyIdentity.on("init", (u) => {
+    setUser(u);
+  });
+  netlifyIdentity.on("login", (u) => {
+    setUser(u);
+  });
+  netlifyIdentity.on("logout", () => {
+    setUser();
+  });
+
+  if (!user) {
+    return (
+      <>
+        <Link href="/">You're not logged in. Go back to the home page.</Link>
+      </>
+    );
+  }
+  return <ProfilePage user={user}></ProfilePage>;
 }

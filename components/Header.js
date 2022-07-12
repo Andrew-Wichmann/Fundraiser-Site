@@ -6,12 +6,11 @@ import styles from "./Header.module.css";
 
 export default function Header({ title }) {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
-  let [user, setUser] = useState(null);
+  let [user, setUser] = useState(netlifyAuth.user);
   let login = () => {
     netlifyAuth.authenticate((user) => {
       setLoggedIn(!!user);
       setUser(user);
-      netlifyAuth.closeModal();
     });
   };
 
@@ -25,6 +24,7 @@ export default function Header({ title }) {
   useEffect(() => {
     netlifyAuth.initialize((user) => {
       setLoggedIn(!!user);
+      setUser(user);
     });
   }, [loggedIn]);
   return (
@@ -35,6 +35,7 @@ export default function Header({ title }) {
           Home
         </Link>
         <Link href="/about">About</Link>
+        {loggedIn ? <Link href="/profile">My Pledge</Link> : <></>}
         <a
           id={styles.oneOffDonation}
           href="https://interland3.donorperfect.net/weblink/weblink.aspx?name=E190660&id=6"
