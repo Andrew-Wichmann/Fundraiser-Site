@@ -35,7 +35,7 @@ export default function Header({ title }) {
           Home
         </Link>
         <Link href="/about">About</Link>
-        {loggedIn ? <Link href="/profile">My Pledge</Link> : <></>}
+        {loggedIn ? <a href="/profile">My Pledge</a> : <></>}
         <a
           id={styles.oneOffDonation}
           href="https://interland3.donorperfect.net/weblink/weblink.aspx?name=E190660&id=6"
