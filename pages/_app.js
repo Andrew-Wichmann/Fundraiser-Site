@@ -7,7 +7,7 @@ import "@styles/globals.css";
 
 function Application({ Component, pageProps }) {
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Andrew Wichmann's 2022 Marathon Fundraising</title>
         <link rel="icon" href="/favicon.ico" />
@@ -16,10 +16,9 @@ function Application({ Component, pageProps }) {
       <main>
         <Header title="Andrew Wichmann Marathon Fundraising" />
         <Component {...pageProps} />
+        <Footer />
       </main>
-
-      <Footer />
-    </div>
+    </>
   );
 }
 
